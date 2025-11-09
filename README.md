@@ -1,32 +1,35 @@
 # 🛍️ Online Retail Analysis & Forecasting
 
 ## 📘 Pengertian Proyek
-Proyek ini bertujuan untuk **menganalisis perilaku pelanggan dan memprediksi pendapatan masa depan** berdasarkan data transaksi e-commerce. Analisis mencakup **RFM segmentation**, **K-Means clustering**, serta **perbandingan model forecasting (ARIMA vs Prophet)** untuk mengidentifikasi pola penjualan dan tren bisnis.
+Proyek ini bertujuan untuk **menganalisis perilaku pelanggan dan memprediksi pendapatan masa depan** menggunakan dataset *Online Retail* dari UCI Machine Learning Repository.  
+Analisis mencakup **pola penjualan**, **perilaku pelanggan**, **kontribusi produk dan negara**, **identifikasi pelanggan bernilai tinggi**, serta **forecasting pendapatan masa depan** menggunakan model *ARIMA* dan *Prophet*.
 
 ---
 
 ## 📖 Deskripsi Proyek
-Analisis dilakukan menggunakan dataset *Online Retail* dari UCI Machine Learning Repository. Proyek ini berfokus pada tiga aspek utama:
-1. **Exploratory Data Analysis (EDA)** untuk memahami karakteristik data penjualan.
-2. **Customer Segmentation (RFM + Clustering)** untuk mengelompokkan pelanggan berdasarkan perilaku pembelian.
-3. **Revenue Forecasting** menggunakan dua pendekatan model time series — **ARIMA** dan **Prophet** — untuk memperkirakan pendapatan enam bulan ke depan.
+Proyek ini merupakan studi komprehensif terhadap data transaksi e-commerce yang dilakukan oleh perusahaan retail Inggris pada periode **Desember 2010 – Desember 2011**.  
+Tujuannya adalah untuk menemukan wawasan strategis terkait performa bisnis dan membantu perusahaan dalam **pengambilan keputusan berbasis data (data-driven decision making)**.  
+
+Analisis mencakup:
+1. Eksplorasi data transaksi untuk memahami perilaku pembelian pelanggan.  
+2. Segmentasi pelanggan dengan **RFM (Recency, Frequency, Monetary)** dan **K-Means Clustering**.  
+3. Prediksi pendapatan masa depan menggunakan **ARIMA dan Prophet** untuk memahami arah tren penjualan.
 
 ---
 
 ## 🗂️ Dataset
-- **Nama:** Online Retail Dataset  
-- **Sumber:** [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/online+retail)
-- **Deskripsi:** Berisi transaksi dari sebuah perusahaan retail Inggris pada tahun 2010–2011.
-- **Jumlah Data:** 541.909 baris dan 8 kolom.
+- **Sumber:** [UCI Machine Learning Repository – Online Retail Dataset](https://archive.ics.uci.edu/ml/datasets/online+retail)  
+- **Periode Data:** 1 Desember 2010 – 9 Desember 2011  
+- **Jumlah Data:** 541.909 transaksi  
 - **Fitur Utama:**
-  - `InvoiceNo` – Nomor faktur transaksi  
-  - `StockCode` – Kode produk  
-  - `Description` – Deskripsi produk  
-  - `Quantity` – Jumlah barang  
-  - `InvoiceDate` – Tanggal transaksi  
-  - `UnitPrice` – Harga per unit  
-  - `CustomerID` – ID pelanggan  
-  - `Country` – Negara asal pembeli
+  - `InvoiceNo` — Nomor transaksi  
+  - `StockCode` — Kode produk  
+  - `Description` — Deskripsi produk  
+  - `Quantity` — Jumlah produk  
+  - `InvoiceDate` — Tanggal transaksi  
+  - `UnitPrice` — Harga per unit  
+  - `CustomerID` — ID pelanggan  
+  - `Country` — Negara asal pelanggan  
 
 ---
 
@@ -34,101 +37,135 @@ Analisis dilakukan menggunakan dataset *Online Retail* dari UCI Machine Learning
 | Kategori | Teknologi |
 |-----------|------------|
 | Bahasa Pemrograman | Python 3 |
-| Data Processing | Pandas, NumPy |
+| Analisis Data | Pandas, NumPy |
 | Visualisasi | Matplotlib, Seaborn |
-| Machine Learning | Scikit-learn |
-| Time Series | Statsmodels, pmdarima, Prophet |
-| Analisis & Modeling | ARIMA, K-Means Clustering |
-| Lingkungan | Jupyter Notebook / Kaggle Notebook |
+| Segmentasi & Clustering | Scikit-learn (K-Means) |
+| Time Series Forecasting | Statsmodels (ARIMA), Prophet |
+| Evaluasi Model | MAPE, MAE, RMSE |
+| Lingkungan Eksekusi | Jupyter Notebook / Kaggle |
 
 ---
 
 ## 🔍 Tahapan Analisis
 
 ### 1️⃣ Data Preparation
-- Menghapus data kosong & duplikat.  
-- Menghapus transaksi tidak valid (`Quantity <= 0`, `UnitPrice <= 0`).  
-- Menambahkan kolom baru:  
-  - `Revenue = Quantity × UnitPrice`  
-  - `Month`, `Year` untuk analisis temporal.
-
-### 2️⃣ Exploratory Data Analysis (EDA)
-- **Statistik Deskriptif** untuk memahami sebaran data.  
-- **Top Produk & Negara Terlaris** berdasarkan total penjualan.  
-- **Tren Bulanan** dan **jumlah transaksi per bulan**.  
-- **Heatmap korelasi** antar variabel numerik.  
-- **Analisis Outlier** pada variabel `Revenue` dan `Quantity`.
-
-### 3️⃣ RFM Analysis & Clustering
-- **RFM Metrics:**
-  - *Recency* → waktu sejak pembelian terakhir.
-  - *Frequency* → frekuensi transaksi.
-  - *Monetary* → total pengeluaran pelanggan.
-- **Clustering dengan K-Means** (k = 4) untuk segmentasi pelanggan.
-- **Hasil Segmentasi:**
-  - Cluster 2 → VIP Customers (nilai transaksi tertinggi).
-  - Cluster 1 → Loyal High Spenders.
-  - Cluster 3 → Regular Buyers.
-  - Cluster 0 → Inactive Customers.
-
-### 4️⃣ Revenue Forecasting
-Perbandingan dua model untuk memprediksi pendapatan 6 bulan ke depan:
-- **ARIMA (AutoRegressive Integrated Moving Average)**
-- **Prophet (Meta/Facebook Prophet)**  
-
-Langkah:
-1. Mengonversi data transaksi menjadi agregasi bulanan.
-2. Split data menjadi train (80%) dan test (20%).
-3. Melatih model dan menghasilkan prediksi jangka pendek.
-4. Visualisasi tren dan hasil perbandingan kedua model.
-
-### 5️⃣ Evaluasi Model
-Metrik yang digunakan:
-- **MAE (Mean Absolute Error)**
-- **MSE (Mean Squared Error)**
-- **RMSE (Root Mean Squared Error)**
-- **MAPE (Mean Absolute Percentage Error)**
-
-📊 **Hasil Evaluasi:**
-| Model | MAE | RMSE | MAPE | Keterangan |
-|--------|------|-------|-------|-------------|
-| ARIMA | 219,530 | 285,753 | 23.30% | ✅ Akurat dan stabil |
-| Prophet | 1,118,559 | 1,322,004 | 167.45% | ❌ Fluktuatif dan kurang stabil |
-
-**Kesimpulan Evaluasi:**  
-Model **ARIMA** memiliki performa terbaik dengan error terkecil dan hasil prediksi paling realistis untuk dataset ini.
+- Menghapus data duplikat dan nilai kosong pada kolom `CustomerID`.  
+- Menghapus transaksi tidak valid (`Quantity ≤ 0`, `UnitPrice ≤ 0`).  
+- Menambahkan kolom baru:
+  - `Revenue = Quantity × UnitPrice`
+  - Ekstraksi bulan dan tahun dari `InvoiceDate` untuk analisis temporal.
 
 ---
 
-## 📈 Hasil Akhir Analisis
-- Total **pendapatan perusahaan**: £8.88 juta dari **18532 transaksi unik**.
-- **Negara dengan revenue tertinggi:** United Kingdom.
-- **Top Produk Terlaris:** *Paper Craft, Little Birdie*.
-- **Segmen pelanggan:** 4 cluster dengan profil berbeda.
-- **Model Forecasting terbaik:** ARIMA (lebih stabil dan presisi).
+### 2️⃣ Exploratory Data Analysis (EDA)
+Analisis deskriptif dan visual dilakukan untuk memahami karakteristik data.
+
+- **Distribusi Transaksi per Bulan:**  
+  Aktivitas penjualan meningkat signifikan menjelang **akhir tahun (November–Desember)** yang mengindikasikan adanya efek *seasonality* seperti liburan dan promosi akhir tahun.
+
+- **Negara Dominan:**  
+  Sebagian besar transaksi berasal dari **United Kingdom** dengan lebih dari **85% kontribusi total penjualan**, menunjukkan fokus bisnis pada pasar domestik.
+
+- **Top Produk Terlaris:**  
+  Produk **“Paper Craft, Little Birdie”** memiliki kontribusi revenue tertinggi, disusul produk dekorasi rumah kecil dan mainan anak.
+
+- **Pola Penjualan:**  
+  Pola penjualan menunjukkan tren **fluktuatif namun meningkat menjelang akhir tahun**, dengan lonjakan besar pada Q4.
+
+---
+
+### 3️⃣ RFM Analysis dan Clustering
+Analisis RFM digunakan untuk memahami perilaku pelanggan:
+- **Recency** → waktu sejak pembelian terakhir.  
+- **Frequency** → jumlah transaksi yang dilakukan.  
+- **Monetary** → total uang yang dibelanjakan.
+
+Hasil segmentasi dengan **K-Means (k=4)** menghasilkan empat kelompok pelanggan:
+| Cluster | Karakteristik | Deskripsi |
+|----------|----------------|------------|
+| 0 | Inactive Customers | Pelanggan jarang berbelanja dan nilai belanja rendah |
+| 1 | Loyal High Spenders | Pelanggan sering membeli dengan nilai transaksi tinggi |
+| 2 | VIP Customers | Kontributor utama terhadap revenue perusahaan |
+| 3 | Regular Buyers | Pembeli aktif dengan nilai moderat |
+
+📈 **Cluster 2 (VIP Customers)** diidentifikasi sebagai pelanggan paling bernilai karena memiliki nilai *monetary* tertinggi dan tingkat pembelian berulang.
+
+---
+
+### 4️⃣ Forecasting Analysis (Analisis Peramalan)
+
+#### 🔹 Pertanyaan 1:
+**Bagaimana pola penjualan dan perilaku pelanggan dalam dataset Online Retail selama periode observasi?**  
+Pola penjualan menunjukkan peningkatan yang signifikan menjelang akhir tahun, terutama pada bulan November dan Desember.  
+Perilaku pelanggan bersifat *seasonal*, dengan peningkatan frekuensi pembelian di periode liburan.  
+Pelanggan VIP memberikan kontribusi utama terhadap total pendapatan tahunan.
+
+#### 🔹 Pertanyaan 2:
+**Produk apa yang memiliki kontribusi penjualan tertinggi, dan negara mana yang paling dominan dalam transaksi?**  
+Produk **“Paper Craft, Little Birdie”** memberikan kontribusi tertinggi terhadap total penjualan, diikuti oleh produk dekoratif kecil dan aksesoris rumah.  
+Negara dengan transaksi terbanyak dan revenue tertinggi adalah **United Kingdom**, diikuti oleh **Netherlands** dan **EIRE** (Irlandia).
+
+#### 🔹 Pertanyaan 3:
+**Siapa pelanggan yang paling bernilai (loyal dan berkontribusi besar terhadap revenue)?**  
+Berdasarkan hasil RFM dan K-Means, **Cluster 2 (VIP Customers)** merupakan pelanggan paling bernilai dengan rata-rata pembelian tinggi, frekuensi transaksi sering, dan *recency* rendah.  
+Mereka memberikan kontribusi lebih dari **40% total revenue**.
+
+#### 🔹 Pertanyaan 4:
+**Bagaimana tren pendapatan per bulan, dan bagaimana perkiraan pendapatan untuk periode mendatang (forecasting)?**
+
+- **Tren Pendapatan:**  
+  Revenue bulanan meningkat tajam di akhir tahun, terutama pada Q4 2011, menunjukkan adanya **seasonal demand**.  
+  Pola ini penting untuk strategi stok dan promosi.
+
+- **Model Peramalan:**  
+  Dua model digunakan:  
+  - **ARIMA (AutoRegressive Integrated Moving Average)**  
+  - **Prophet (Facebook Prophet)**  
+
+  Hasil evaluasi:
+  | Model | MAE | RMSE | MAPE | Akurasi |
+  |--------|------|-------|-------|----------|
+  | ARIMA | 219,530 | 285,753 | 23.30% | ✅ Stabil dan akurat |
+  | Prophet | 1,118,559 | 1,322,004 | 167.45% | ❌ Tidak stabil |
+
+  **ARIMA** menunjukkan performa terbaik dengan error terkecil dan hasil prediksi paling realistis.  
+  Prediksi menunjukkan **penurunan ringan di awal tahun** setelah puncak penjualan Desember, kemudian **kembali stabil di pertengahan tahun**.  
+  Hal ini mencerminkan **pola musiman alami** pada industri ritel.
+
+---
+
+## 📊 Hasil Akhir Analisis
+- Total **pendapatan perusahaan**: £8.88 juta dari **18532 transaksi unik**.  
+- **Negara dominan:** United Kingdom (kontribusi >85%).  
+- **Produk terlaris:** Paper Craft, Little Birdie.  
+- **Pelanggan paling bernilai:** Cluster 2 (VIP Customers).  
+- **Model forecasting terbaik:** ARIMA, dengan error terendah dan prediksi stabil.
 
 ---
 
 ## 💡 Insight dan Manfaat
-- Pelanggan terbagi menjadi beberapa segmen yang bisa ditargetkan secara strategis.
-- Pola penjualan menunjukkan peningkatan signifikan menjelang akhir tahun (musim liburan).
-- Model ARIMA dapat digunakan untuk **perencanaan stok, budgeting, dan strategi pemasaran** jangka pendek.
-- Prophet cocok digunakan bila dataset menunjukkan **pola musiman jangka panjang** setelah pembersihan data lebih lanjut.
+- Perusahaan memiliki basis pelanggan yang kuat di Inggris, dengan potensi ekspansi internasional.  
+- Adanya **musim penjualan (seasonal pattern)** di Q4 membuka peluang untuk strategi promosi tahunan.  
+- Segmentasi RFM membantu **menargetkan pelanggan bernilai tinggi** dengan strategi loyalitas khusus.  
+- Model forecasting ARIMA memberikan dasar kuat untuk **perencanaan stok dan strategi pemasaran jangka pendek.**
 
 ---
 
 ## 🧾 Kesimpulan Akhir
-Proyek ini berhasil:
-1. Melakukan **data cleaning dan eksplorasi mendalam** terhadap transaksi e-commerce.
-2. Mengidentifikasi **segmen pelanggan utama** dengan metode **RFM + K-Means**.
-3. Melakukan **forecasting pendapatan bulanan** menggunakan dua pendekatan model.
-4. Menunjukkan bahwa **ARIMA outperform Prophet** pada dataset ini.  
+Proyek **Online Retail Analysis & Forecasting** berhasil memberikan pemahaman mendalam mengenai:
+1. **Pola penjualan dan perilaku pelanggan** secara temporal.  
+2. **Identifikasi pelanggan utama dan produk unggulan.**  
+3. **Prediksi pendapatan masa depan** dengan model ARIMA yang terbukti efektif.  
 
-Secara keseluruhan, analisis ini dapat menjadi dasar dalam **pengambilan keputusan bisnis berbasis data (data-driven decision making)** di sektor e-commerce.
+Hasil analisis ini dapat digunakan oleh perusahaan untuk:
+- **Optimasi strategi pemasaran berbasis data.**
+- **Manajemen persediaan berdasarkan pola musiman.**
+- **Peningkatan retensi pelanggan bernilai tinggi.**
 
 ---
 
 ### ✨ Author
 **Rehana Putri**  
-*Online Retail Analysis & Forecasting Project*  
-📅 2025  
+📍 Institut Teknologi Sepuluh Nopember (ITS)  
+📅 Tahun: 2025  
+💼 Bidang: Data Analytics & Forecasting
